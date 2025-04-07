@@ -68,7 +68,16 @@ async def upload(bot: Client, m: Message):
            os.remove(x)
            return
     
-   
+
+        # Check if the file contains master.mpd links
+    has_master_mpd = any("/master.mpd" in link[1] for link in links)
+
+    if has_master_mpd:
+        await editable.edit("**𝑵𝒐𝒘 𝒔𝒆𝒏𝒅 𝒚𝒐𝒖𝒓 𝑷𝑾 𝒖𝒔𝒆𝒍𝒆𝒔𝒔 𝒂𝒄𝒕𝒊𝒗𝒆 𝒕𝒐𝒌𝒆𝒏.**")
+        token_input: Message = await bot.listen(editable.chat.id)
+        token = token_input.text
+        await token_input.delete(True)
+        
     await editable.edit(f"**𝕋ᴏᴛᴀʟ ʟɪɴᴋ𝕤 ғᴏᴜɴᴅ ᴀʀᴇ🔗🔗** **{len(links)}**\n\n**𝕊ᴇɴᴅ 𝔽ʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴɪᴛɪᴀʟ ɪ𝕤** **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
@@ -149,7 +158,7 @@ async def upload(bot: Client, m: Message):
 
             elif '/master.mpd' in url:
              id =  url.split("/")[-2]
-             url =  "https://d26g5bnklkwsh4.cloudfront.net/" + id + "/master.m3u8"
+             url =  "https://madxabhi-pw.onrender.com/" + id + "/master.m3u8?token={token}"
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
             name = f'{str(count).zfill(3)}) {name1[:60]}'
